@@ -10,8 +10,6 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 // components/DepartmentList.tsx
 import { useState } from "react";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 var hardcodedUserData = [
     {
         department: "customer_service",
@@ -25,7 +23,6 @@ var hardcodedUserData = [
 var DepartmentList = function (_a) {
     var _b = _a.data, data = _b === void 0 ? hardcodedUserData : _b;
     var _c = useState([]), selectedDepartments = _c[0], setSelectedDepartments = _c[1];
-    var _d = useState([]), expandedDepartments = _d[0], setExpandedDepartments = _d[1];
     var handleCheckboxChange = function (item, isSubDepartment) {
         setSelectedDepartments(function (prevSelected) {
             var _a, _b, _c, _d, _e;
@@ -62,13 +59,6 @@ var DepartmentList = function (_a) {
             }
         });
     };
-    var handleToggleExpand = function (department) {
-        setExpandedDepartments(function (prevExpanded) {
-            return prevExpanded.includes(department)
-                ? prevExpanded.filter(function (dep) { return dep !== department; })
-                : __spreadArray(__spreadArray([], prevExpanded, true), [department], false);
-        });
-    };
-    return (_jsxs("div", { children: [_jsx("h2", { children: "User Information and Department List:" }), data.map(function (user, index) { return (_jsxs("div", { children: [_jsx("div", { children: _jsxs("label", { children: [_jsx("input", { type: "checkbox", checked: selectedDepartments.includes(user.department), onChange: function () { return handleCheckboxChange(user.department, false); } }), expandedDepartments.includes(user.department) ? (_jsx(ExpandMoreIcon, { onClick: function () { return handleToggleExpand(user.department); } })) : (_jsx(ChevronRightIcon, { onClick: function () { return handleToggleExpand(user.department); } })), user.department] }) }), expandedDepartments.includes(user.department) && (_jsx("ul", { children: user.sub_departments.map(function (subDep, subIndex) { return (_jsx("li", { children: _jsxs("label", { children: [_jsx("input", { type: "checkbox", checked: selectedDepartments.includes(subDep), onChange: function () { return handleCheckboxChange(subDep, true); } }), subDep] }) }, subIndex)); }) }))] }, index)); })] }));
+    return (_jsxs("div", { children: [_jsx("h2", { children: "User Information and Department List:" }), data.map(function (user, index) { return (_jsxs("div", { children: [_jsxs("label", { children: [_jsx("input", { type: "checkbox", checked: selectedDepartments.includes(user.department), onChange: function () { return handleCheckboxChange(user.department, false); } }), user.department] }), _jsx("ul", { children: user.sub_departments.map(function (subDep, subIndex) { return (_jsx("li", { children: _jsxs("label", { children: [_jsx("input", { type: "checkbox", checked: selectedDepartments.includes(subDep), onChange: function () { return handleCheckboxChange(subDep, true); } }), subDep] }) }, subIndex)); }) })] }, index)); })] }));
 };
 export default DepartmentList;
