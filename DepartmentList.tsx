@@ -1,7 +1,6 @@
 // components/DepartmentList.tsx
 import React, { useState } from "react";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+
 
 const hardcodedUserData = [
   {
@@ -25,7 +24,6 @@ interface DepartmentListProps {
 
 const DepartmentList: React.FC<DepartmentListProps> = ({ data = hardcodedUserData }) => {
   const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
-  const [expandedDepartments, setExpandedDepartments] = useState<string[]>([]);
 
   const handleCheckboxChange = (item: string, isSubDepartment: boolean) => {
     setSelectedDepartments((prevSelected) => {
@@ -74,52 +72,38 @@ const DepartmentList: React.FC<DepartmentListProps> = ({ data = hardcodedUserDat
     });
   };
 
-  const handleToggleExpand = (department: string) => {
-    setExpandedDepartments((prevExpanded) =>
-      prevExpanded.includes(department)
-        ? prevExpanded.filter((dep) => dep !== department)
-        : [...prevExpanded, department]
-    );
-  };
-
   return (
     <div>
       <h2>User Information and Department List:</h2>
       {data.map((user, index) => (
         <div key={index}>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedDepartments.includes(user.department)}
-                onChange={() => handleCheckboxChange(user.department, false)}
-              />
-              {expandedDepartments.includes(user.department) ? (
-                <ExpandMoreIcon onClick={() => handleToggleExpand(user.department)} />
-              ) : (
-                <ChevronRightIcon onClick={() => handleToggleExpand(user.department)} />
-              )}
-              {user.department}
-            </label>
-          </div>
-          {expandedDepartments.includes(user.department) && (
-            <ul>
-              {user.sub_departments.map((subDep, subIndex) => (
-                <li key={subIndex}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedDepartments.includes(subDep)}
-                      onChange={() => handleCheckboxChange(subDep, true)}
-                    />
-                    {subDep}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          )}
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedDepartments.includes(user.department)}
+              onChange={() => handleCheckboxChange(user.department, false)}
+            />
+            {user.department}
+          </label>
+          <ul>
+            {user.sub_departments.map((subDep, subIndex) => (
+              <li key={subIndex}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedDepartments.includes(subDep)}
+                    onChange={() => handleCheckboxChange(subDep, true)}
+                  />
+                  {subDep}
+                </label>
+              </li>
+            ))}
+          </ul>
         </div>
       ))}
+
+     
+     
     </div>
   );
 };
